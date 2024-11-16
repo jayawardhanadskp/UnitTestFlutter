@@ -44,7 +44,21 @@ void main() {
         },
       );
 
-      
+      test(
+        'given UserRepository class when getUser function is called and status code is not 200 then an exception should be thrown',
+        () async {
+          // arrange
+          when(
+            () => mockHTTPClient.get(
+              Uri.parse('https://jsonplaceholder.typicode.com/users/1'),
+            ),
+          ).thenAnswer((invocation) async => Response('{}', 500));
+          // act
+          final user = userRepository.getUser();
+          // assert
+          expect(user, throwsException);
+        },
+      );
     });
   });
 }
