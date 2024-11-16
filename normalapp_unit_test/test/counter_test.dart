@@ -3,7 +3,9 @@ import 'package:normalapp_unit_test/counter.dart';
 
 void main() {
   // given when then
-  test(
+
+  group('Counter class -', () {
+    test(
       'given counter class when it is instanted then value of count should be 0',
       () {
     // Arrange
@@ -27,4 +29,6 @@ void main() {
     // Assert
     expect(val, 1);
   });
+  });
+  
 }
