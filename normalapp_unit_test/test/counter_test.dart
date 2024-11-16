@@ -2,8 +2,19 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:normalapp_unit_test/counter.dart';
 
 void main() {
-  // given when then
+  // PreTest
+  setUp(() => null);
+  setUpAll(() => null);
 
+  // setup is called before every test
+  // setupAll is called before all the tests
+
+  // Setup -> test -> setup -> test -> setup -> test
+  // SetupAll -> test -> test -> test -> test 
+
+
+  // given when then
+  // Testing
   group('Counter class -', () {
     test(
         'given counter class when it is instanted then value of count should be 0',
@@ -41,4 +52,11 @@ void main() {
       expect(val, -1);
     });
   });
+
+  // Post Test
+  tearDown(() => null);
+  tearDownAll(() => null);
+
+  // test -> Teardown -> test -> Teardown -> test -> Teardown
+  // test -> test -> test -> test -> TeardownAll
 }
