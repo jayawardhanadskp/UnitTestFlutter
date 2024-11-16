@@ -58,7 +58,19 @@ void main() {
       expect(val, -1);
     });
 
-    
+    test(
+        'given counter class when it is reset then the value of counter should be 0',
+        () {
+      // Arrange
+      // done in witn setup
+
+      // Act
+      counter.reset();
+      final val = counter.count;
+
+      // Assert
+      expect(val, 0);
+    });
   });
 
   // Post Test
