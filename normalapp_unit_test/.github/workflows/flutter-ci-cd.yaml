@@ -1,0 +1,62 @@
+name: Flutter CI.CD Pipeline
+
+on:
+    push:
+        branches:
+            - master
+    pull_request:
+        branches:
+            - master
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+        # step1: checkput the code
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        # Steps 2: setup flutter
+        - name: Setup Flutter
+          uses: subosito/flutter-action@v2
+          with:
+            flutter-version: 'stable'
+
+        # Setup 3: Install dependancies
+        - name: Install dependancies
+          run: flutter pub get
+
+        # step 4: Run tests
+        - name: run flutter tests
+          run: flutter test
+
+        # Step 5: Build APK (for Android)
+        - name: Build APK
+          run: flutter build apk --release
+
+        # Step 6" Build IPA (for iOS)
+        - name: Build IPA (iOS)
+          run: flutter build ios --release --no-codesign
+
+    #     # Step 7: Upload APK to Firebase for Beta Testing (Firebase App Distribution)
+    #   - name: Upload APK to Firebase
+    #   uses: wzieba/Firebase-Distribution-Github-Action@v1
+    #   with:
+    #     appId: ${{ secrets.FIREBASE_APP_ID }}  # Stored in GitHub Secrets
+    #     token: ${{ secrets.FIREBASE_AUTH_TOKEN }}  # Firebase token stored in Secrets
+    #     groups: "testers"  # Use a tester group in Firebase
+    #     file: build/app/outputs/flutter-apk/app-release.apk
+
+    # # Step 8: Deploy to Google Play (using Fastlane)
+    # - name: Deploy to Google Play
+    #   run: |
+    #     cd android
+    #     fastlane supply --apk ../build/app/outputs/flutter-apk/app-release.apk --track internal --json_key ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
+
+    # # Step 9: Deploy to App Store (using Fastlane)
+    # - name: Deploy to App Store
+    #   run: |
+    #     cd ios
+    #     fastlane deliver --ipa ../build/ios/iphoneos/Runner.app --username ${{ secrets.APP_STORE_USERNAME }} --app_identifier com.example.app
+        
