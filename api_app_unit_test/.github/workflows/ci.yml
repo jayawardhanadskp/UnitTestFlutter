@@ -1,0 +1,35 @@
+name: Flutter CI Pipeline
+
+on:
+    push:
+        branches:
+            - master
+    pull_request:
+        branches:
+            - master
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+              
+
+            - name: Setup Flutter
+              uses: subosito/flutter-action@v1
+              with:
+                flutter-version: 'stable'
+
+            - name: Install dependencies
+              run: flutter pub get
+
+            - name: Run tests
+              run: flutter test
+
+            - name: Build APK
+              run: flutter build apk --relese
+
+            - name: Build IPA 
+              run: flutter build ios --release --no-codesign
